@@ -1,4 +1,13 @@
 # Built application files
+.DS_Store
+.dart_tool/
+
+.packages
+.pub/
+
+build/
+
+
 *.apk
 *.ap_
 
