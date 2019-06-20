@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-
 class BuglyLog {
   static const MethodChannel _channel =
   const MethodChannel('bugly');

@@ -92,6 +92,14 @@ public class BuglyCrashPlugin implements MethodCallHandler {
       }
       CrashReport.setUserSceneTag(mContext,userSceneTag);
       BuglyCrashPluginLog.d("mContext:"+mContext+" appVersion:"+userSceneTag);
+    }else if (call.method.equals("setUserId")){
+      int userSceneTag = 0;
+      String userId = "";
+      if (call.hasArgument("userId")) {
+        userId = call.argument("userId");
+      }
+      CrashReport.setUserId(mContext,userId);
+      BuglyCrashPluginLog.d("mContext:"+mContext+" appVersion:"+userSceneTag);
     }else if (call.method.equals("putUserData")){
       String userKey = "";
       String userValue = "";

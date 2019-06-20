@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 /**
@@ -20,13 +21,26 @@ class Bugly {
    * @param appId appId
    * @param isDebug 是否打开debug开关
    */
-  static Future<void> initCrashReport({
+  static Future<void> initAndroidCrashReport({
     String appId,
     bool isDebug,
   }) async{
     Map<String, Object> map = {
-      "appId":appId,
+      "appId": appId,
       "isDebug":isDebug,
+    };
+    _channel.invokeMethod("initCrashReport",map);
+  }
+
+  /**
+   * 初始化接口.
+   * @param appId appId
+   */
+  static Future<void> initIosCrashReport({
+    String appId,
+  }) async{
+    Map<String, Object> map = {
+      "appId": appId,
     };
     _channel.invokeMethod("initCrashReport",map);
   }
@@ -62,10 +76,12 @@ class Bugly {
   static Future<void> setAppChannel({
     String appChannel,
   }) async{
-    Map<String, Object> map = {
-      "appChannel":appChannel,
-    };
-    _channel.invokeMethod("setAppChannel",map);
+    if(Platform.isAndroid){
+      Map<String, Object> map = {
+        "appChannel":appChannel,
+      };
+      _channel.invokeMethod("setAppChannel",map);
+    }
   }
 
   /**
@@ -76,10 +92,12 @@ class Bugly {
   static Future<void> setAppPackage({
     String appPackage,
   }) async{
-    Map<String, Object> map = {
-      "appPackage":appPackage,
-    };
-    _channel.invokeMethod("setAppPackage",map);
+    if(Platform.isAndroid){
+      Map<String, Object> map = {
+        "appPackage":appPackage,
+      };
+      _channel.invokeMethod("setAppPackage",map);
+    }
   }
 
   /**
@@ -111,6 +129,20 @@ class Bugly {
   }
 
   /**
+   * 设置用户id
+   *
+   * @param userSceneTag 唯一标识一种场景，必须大于0
+   */
+  static Future<void> setUserId({
+    String userId,
+  }) async{
+    Map<String, Object> map = {
+      "userId":userId,
+    };
+    _channel.invokeMethod("setUserId",map);
+  }
+
+  /**
    * 添加用户数据Key，Value.
    *
    * @param userKey 用户数据key
@@ -134,10 +166,12 @@ class Bugly {
   static Future<void> setIsDevelopmentDevice({
     bool isDevelopmentDevice,
   }) async{
-    Map<String, Object> map = {
-      "isDevelopmentDevice":isDevelopmentDevice,
-    };
-    _channel.invokeMethod("setIsDevelopmentDevice",map);
+    if(Platform.isAndroid){
+      Map<String, Object> map = {
+        "isDevelopmentDevice":isDevelopmentDevice,
+      };
+      _channel.invokeMethod("setIsDevelopmentDevice",map);
+    }
   }
 
 }

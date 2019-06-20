@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:bugly_crash/bugly.dart';
 import 'package:bugly_crash/buglyLog.dart';
-
+import 'dart:io';
 //void main() => runApp(MyApp());
 Map<String,String> extraInfo = {"key1":"value1","key2":"value2","key3":"value1"};
 
@@ -35,20 +35,43 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Bugly.setAppVersion(appVersion:"1.9.2");
-    Bugly.setAppChannel(appChannel: "flutter_test");
-    Bugly.setAppPackage(appPackage: "com.bugly.flutter.test");
-    Bugly.setUserSceneTag(userSceneTag: 30);
+    initPlatformState();
+    if(Platform.isAndroid){
+      initBuglyAndroid();
+    }else if(Platform.isIOS){
+      initBuglyIos();
+    }
+  }
+
+  void initBuglyAndroid(){
+    Bugly.initAndroidCrashReport(appId:"d562178d23",isDebug: true);
+    Bugly.setUserId(userId:"androiduser");
+    Bugly.setUserSceneTag(userSceneTag: 111437);
+    Bugly.setIsDevelopmentDevice(isDevelopmentDevice: true);
+    Bugly.setAppVersion(appVersion:"1.9.3");
+    //bugly自定义日志,可在"跟踪日志"页面查看
+    BuglyLog.d(tag:"bugly",content:"debugvalue");
+    BuglyLog.i(tag:"bugly",content:"infovalue");
+    BuglyLog.v(tag:"bugly",content:"verbosevalue");
+    BuglyLog.w(tag:"bugly",content:"warnvalue");
+    BuglyLog.e(tag:"bugly",content:"errorvalue");
+    //自定义map参数 可在"跟踪数据"页面查看
     Bugly.putUserData(userKey:"userkey1",userValue:"uservalue1");
     Bugly.putUserData(userKey:"userkey2",userValue:"uservalue2");
-    BuglyLog.d(tag:"d",content:"value");
-    BuglyLog.i(tag:"i",content:"value");
-    BuglyLog.v(tag:"v",content:"value");
-    BuglyLog.w(tag:"w",content:"value");
-    BuglyLog.e(tag:"e",content:"value");
-    Bugly.setIsDevelopmentDevice(isDevelopmentDevice: true);
-    Bugly.initCrashReport(appId:"d562178d23",isDebug: true);
-    initPlatformState();
+  }
+
+  void initBuglyIos(){
+    Bugly.initIosCrashReport(appId:"87654c7bfa");
+    Bugly.setUserSceneTag(userSceneTag: 116852);
+    Bugly.setAppVersion(appVersion:"1.9.2");
+    Bugly.putUserData(userKey:"userkey1",userValue:"uservalue1");
+    Bugly.putUserData(userKey:"userkey2",userValue:"uservalue2");
+    Bugly.setUserId(userId:"iosuser");
+    BuglyLog.d(tag:"bugly",content:"debugvalue");
+    BuglyLog.i(tag:"bugly",content:"infovalue");
+    BuglyLog.w(tag:"bugly",content:"warnvalue");
+    BuglyLog.v(tag:"bugly",content:"verbosevalue");
+    BuglyLog.e(tag:"bugly",content:"errorvalue");
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -71,7 +94,7 @@ class _MyAppState extends State<MyApp> {
     }
 
     //测试APP未捕获到的异常上报
-    throw 'bugly flutter uncaught error test';
+    //throw 'bugly flutter uncaught error test';
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -83,6 +106,10 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  _onClick(){
+    throw 'bugly flutter uncaught error test';
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -91,7 +118,10 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: GestureDetector(
+            onTap: _onClick,
+            child: Text('Running on: $_platformVersion\n'),
+          )
         ),
       ),
     );
