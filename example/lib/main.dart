@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void initBuglyAndroid(){
-    Bugly.initAndroidCrashReport(appId:"d562178d23",isDebug: true);
+    Bugly.initAndroidCrashReport(appId:"c50a711298",isDebug: true);
     Bugly.setUserId(userId:"androiduser");
     Bugly.setUserSceneTag(userSceneTag: 111437);
     Bugly.setIsDevelopmentDevice(isDevelopmentDevice: true);
