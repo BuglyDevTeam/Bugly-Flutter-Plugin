@@ -34,6 +34,6 @@ android {
 }
 
 dependencies {
-    //compile 'com.tencent.bugly:crashreport:latest.release'
-    implementation  files('libs/bugly_crash_release.jar')
+    implementation 'com.tencent.bugly:crashreport:3.3.92'
+    implementation 'com.tencent.bugly:nativecrashreport:3.9.0'
 }

@@ -6,10 +6,10 @@ class BuglyLog {
   const MethodChannel('bugly');
 
   static Future<void> d({
-    String tag,
-    String content,
+    String? tag,
+    String? content,
   }) async{
-    Map<String, Object> map = {
+    Map<String, Object?> map = {
       "tag":tag,
       "content":content,
     };
@@ -17,10 +17,10 @@ class BuglyLog {
   }
 
   static Future<void> i({
-    String tag,
-    String content,
+    String? tag,
+    String? content,
   }) async{
-    Map<String, Object> map = {
+    Map<String, Object?> map = {
       "tag":tag,
       "content":content,
     };
@@ -28,10 +28,10 @@ class BuglyLog {
   }
 
   static Future<void> v({
-    String tag,
-    String content,
+    String? tag,
+    String? content,
   }) async{
-    Map<String, Object> map = {
+    Map<String, Object?> map = {
       "tag":tag,
       "content":content,
     };
@@ -39,10 +39,10 @@ class BuglyLog {
   }
 
   static Future<void> w({
-    String tag,
-    String content,
+    String? tag,
+    String? content,
   }) async{
-    Map<String, Object> map = {
+    Map<String, Object?> map = {
       "tag":tag,
       "content":content,
     };
@@ -50,10 +50,10 @@ class BuglyLog {
   }
 
   static Future<void> e({
-    String tag,
-    String content,
+    String? tag,
+    String? content,
   }) async{
-    Map<String, Object> map = {
+    Map<String, Object?> map = {
       "tag":tag,
       "content":content,
     };

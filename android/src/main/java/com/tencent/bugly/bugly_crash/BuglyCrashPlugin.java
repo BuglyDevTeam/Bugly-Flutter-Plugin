@@ -113,13 +113,19 @@ public class BuglyCrashPlugin implements MethodCallHandler {
       BuglyCrashPluginLog.d("userKey:"+userKey+" userValue:"+userValue);
     }else if (call.method.contains("log")){
       buglyLog(call);
-    }else if (call.method.contains("setIsDevelopmentDevice")){
-      boolean isDevelopmentDevice = false;
-      if (call.hasArgument("isDevelopmentDevice")) {
-        isDevelopmentDevice = call.argument("isDevelopmentDevice");
+    }else if (call.method.contains("setServerUrl")){
+      String url = "";
+      if (call.hasArgument("url")) {
+        url = call.argument("url");
+        CrashReport.setServerUrl(url);
       }
-      CrashReport.setIsDevelopmentDevice(mContext, isDevelopmentDevice);
-      BuglyCrashPluginLog.d("isDevelopmentDevice:"+isDevelopmentDevice);
+      BuglyCrashPluginLog.d("url:"+url);
+    }else if (call.method.contains("setDeviceId")){
+      String deviceId = "";
+      if (call.hasArgument("deviceId")) {
+        deviceId = call.argument("deviceId");
+        CrashReport.setDeviceId(mContext,deviceId);
+      }
     } else {
       result.notImplemented();
     }

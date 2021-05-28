@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 /**
- * Description:bugly oa futter plugin .
+ * Description:bugly futter plugin .
  * @author rockypzhang
  * @since 2019/5/28
  */
@@ -22,10 +22,10 @@ class Bugly {
    * @param isDebug 是否打开debug开关
    */
   static Future<void> initAndroidCrashReport({
-    String appId,
-    bool isDebug,
+    String? appId,
+    bool? isDebug,
   }) async{
-    Map<String, Object> map = {
+    Map<String, Object?> map = {
       "appId": appId,
       "isDebug":isDebug,
     };
@@ -33,13 +33,76 @@ class Bugly {
   }
 
   /**
+   * 自定义上报域名.
+   * @param url 自定义域名
+   */
+  static Future<void> setAndroidServerUrl({
+    String? url,
+  }) async{
+    if(Platform.isAndroid){
+      Map<String, Object?> map = {
+        "url": url,
+      };
+      _channel.invokeMethod("setServerUrl",map);
+    }
+  }
+
+  /**
+   * 设置App渠道.
+   *
+   * @param appChannel App渠道
+   */
+  static Future<void> setAndroidAppChannel({
+    String? appChannel,
+  }) async{
+    if(Platform.isAndroid){
+      Map<String, Object?> map = {
+        "appChannel":appChannel,
+      };
+      _channel.invokeMethod("setAppChannel",map);
+    }
+  }
+
+  /**
+   * 设置App包名
+   *
+   * @param appPackage App包名
+   */
+  static Future<void> setAndroidAppPackage({
+    String? appPackage,
+  }) async{
+    if(Platform.isAndroid){
+      Map<String, Object?> map = {
+        "appPackage":appPackage,
+      };
+      _channel.invokeMethod("setAppPackage",map);
+    }
+  }
+
+  /**
+   * 设置App 设备 id
+   *
+   * @param appPackage App包名
+   */
+  static Future<void> setAndroidDeviceId({
+    String? deviceId,
+  }) async{
+    if(Platform.isAndroid){
+      Map<String, Object?> map = {
+        "deviceId":deviceId,
+      };
+      _channel.invokeMethod("setDeviceId",map);
+    }
+  }
+
+  /**
    * 初始化接口.
    * @param appId appId
    */
   static Future<void> initIosCrashReport({
-    String appId,
+    String? appId,
   }) async{
-    Map<String, Object> map = {
+    Map<String, Object?> map = {
       "appId": appId,
     };
     _channel.invokeMethod("initCrashReport",map);
@@ -54,12 +117,12 @@ class Bugly {
    * @param extraInfo 额外信息
    */
   static Future<void> postException({
-    String type,
-    String error,
-    String stackTrace,
-    Map<String,String> extraInfo,
+    String? type,
+    String? error,
+    String? stackTrace,
+    Map<String,String>? extraInfo,
   }) async{
-    Map<String, Object> map = {
+    Map<String, Object?> map = {
       "type":type,
       "error":error,
       "stackTrace":stackTrace,
@@ -69,46 +132,14 @@ class Bugly {
   }
 
   /**
-   * 设置App渠道.
-   *
-   * @param appChannel App渠道
-   */
-  static Future<void> setAppChannel({
-    String appChannel,
-  }) async{
-    if(Platform.isAndroid){
-      Map<String, Object> map = {
-        "appChannel":appChannel,
-      };
-      _channel.invokeMethod("setAppChannel",map);
-    }
-  }
-
-  /**
-   * 设置App包名
-   *
-   * @param appPackage App包名
-   */
-  static Future<void> setAppPackage({
-    String appPackage,
-  }) async{
-    if(Platform.isAndroid){
-      Map<String, Object> map = {
-        "appPackage":appPackage,
-      };
-      _channel.invokeMethod("setAppPackage",map);
-    }
-  }
-
-  /**
    * 设置App版本
    *
    * @param appVersion App版本
    */
   static Future<void> setAppVersion({
-    String appVersion,
+    String? appVersion,
   }) async{
-    Map<String, Object> map = {
+    Map<String, Object?> map = {
       "appVersion":appVersion,
     };
     _channel.invokeMethod("setAppVersion",map);
@@ -120,9 +151,9 @@ class Bugly {
    * @param userSceneTag 唯一标识一种场景，必须大于0
    */
   static Future<void> setUserSceneTag({
-    int userSceneTag,
+    int? userSceneTag,
   }) async{
-    Map<String, Object> map = {
+    Map<String, Object?> map = {
       "userSceneTag":userSceneTag,
     };
     _channel.invokeMethod("setUserSceneTag",map);
@@ -134,9 +165,9 @@ class Bugly {
    * @param userSceneTag 唯一标识一种场景，必须大于0
    */
   static Future<void> setUserId({
-    String userId,
+    String? userId,
   }) async{
-    Map<String, Object> map = {
+    Map<String, Object?> map = {
       "userId":userId,
     };
     _channel.invokeMethod("setUserId",map);
@@ -149,29 +180,14 @@ class Bugly {
    * @param userValue 用户数据value
    */
   static Future<void> putUserData({
-    String userKey,
-    String userValue,
+    String? userKey,
+    String? userValue,
   }) async{
-    Map<String, Object> map = {
+    Map<String, Object?> map = {
       "userKey":userKey,
       "userValue":userValue,
     };
     _channel.invokeMethod("putUserData",map);
-  }
-
-  /**
-   * 设置开发设备（Development Device）.
-   * @param isDevelopmentDevice true表示是开发设备，false表示非开发设备
-   */
-  static Future<void> setIsDevelopmentDevice({
-    bool isDevelopmentDevice,
-  }) async{
-    if(Platform.isAndroid){
-      Map<String, Object> map = {
-        "isDevelopmentDevice":isDevelopmentDevice,
-      };
-      _channel.invokeMethod("setIsDevelopmentDevice",map);
-    }
   }
 
 }

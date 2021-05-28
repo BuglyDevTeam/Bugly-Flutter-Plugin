@@ -1,6 +1,5 @@
 #import "BuglyCrashPlugin.h"
 #import <Bugly/Bugly.h>
-#import <Bugly/BuglyLog.h>
 
 @implementation BuglyCrashPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
