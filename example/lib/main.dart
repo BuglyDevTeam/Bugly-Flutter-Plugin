@@ -65,7 +65,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   void initBuglyIos(){
-    //Bugly.initIosCrashReport(appId:"87654c7bfa",debugMode: true,serverUrl: "https://ios.bugly.qcloud.com/rqd/sync");
     Bugly.initIosCrashReport(appId:"87654c7bfa",debugMode: true);
     Bugly.setUserSceneTag(userSceneTag: 116852);
     Bugly.setAppVersion(appVersion:"1.9.2");
