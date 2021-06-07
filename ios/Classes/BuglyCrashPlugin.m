@@ -15,11 +15,20 @@
     result([@"iOS " stringByAppendingString:[[UIDevice currentDevice] systemVersion]]);
   } else if ([@"initCrashReport" isEqualToString:call.method]) {
     NSString *appId = call.arguments[@"appId"];
+    NSNumber *debugModeNumber = call.arguments[@"debugMode"];
+    NSUInteger *debugModeInt = [debugModeNumber integerValue];
+    NSString *serverUrl = call.arguments[@"serverUrl"];
     BuglyConfig *config = [[BuglyConfig alloc] init];
-    config.debugMode = YES;
+    if(debugModeInt > 0) {
+        config.debugMode = YES;
+    } else {
+        config.debugMode = NO;
+    }
+    if(![self isEmpty:serverUrl]) {
+      config.crashServerUrl = serverUrl;
+    }
     config.reportLogLevel = BuglyLogLevelVerbose;
-    NSLog(@"initCrashReport appid:%@",appId);
-    //[Bugly startWithAppId:appId];
+    NSLog(@"initCrashReport appid:%@ debugmode is %d serverUrl is %@",appId,debugModeInt,serverUrl);
     [Bugly startWithAppId:appId config:config];
   } else if ([@"postException" isEqualToString:call.method]) {
      NSLog(@"postException");
@@ -71,6 +80,17 @@
   } else {
     result(FlutterMethodNotImplemented);
   }
+}
+
+- (BOOL)isEmpty:(id)object{
+    if (object == nil || [object isEqual:[NSNull null]]) {
+        return YES;
+    } else if ([object isKindOfClass:[NSString class]]) {
+        return [object isEqualToString:@""];
+    } else if ([object isKindOfClass:[NSNumber class]]) {
+        return [object isEqualToNumber:@(0)];
+    }
+    return NO;
 }
 
 @end

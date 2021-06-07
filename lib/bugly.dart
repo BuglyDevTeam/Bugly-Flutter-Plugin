@@ -101,9 +101,13 @@ class Bugly {
    */
   static Future<void> initIosCrashReport({
     String? appId,
+    bool? debugMode,
+    String? serverUrl,
   }) async{
     Map<String, Object?> map = {
       "appId": appId,
+      "debugMode": debugMode,
+      "serverUrl": serverUrl
     };
     _channel.invokeMethod("initCrashReport",map);
   }
